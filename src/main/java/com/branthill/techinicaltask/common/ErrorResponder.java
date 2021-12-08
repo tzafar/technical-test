@@ -5,6 +5,7 @@ import com.branthill.techinicaltask.common.errors.AppointmentNotFound;
 import com.branthill.techinicaltask.common.errors.AppointmentTimeSlotTakenException;
 import com.branthill.techinicaltask.common.errors.Error;
 import com.branthill.techinicaltask.common.errors.GeneralException;
+import com.branthill.techinicaltask.common.errors.InvalidStartTimeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -32,5 +33,10 @@ public class ErrorResponder {
     @ExceptionHandler(AppointmentTimeSlotTakenException.class)
     public ResponseEntity<Error> handleAppointmentTimeSlotTakenException(AppointmentTimeSlotTakenException e){
         return ResponseEntity.badRequest().body(new Error("The appointment time slot is taken"));
+    }
+
+    @ExceptionHandler(InvalidStartTimeException.class)
+    public ResponseEntity<Error> handleInvalidStartTimeException(InvalidStartTimeException e){
+        return ResponseEntity.badRequest().body(new Error("The appointment time slot should be at either 00 minutes or 30 minutes"));
     }
 }
